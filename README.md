@@ -48,7 +48,7 @@ Before running the project, ensure you have the following installed:
 
 ## 🚀 Installation & Setup
 
-### Method 1: Docker (Recommended)
+### Setup
 
 This method sets up both the application and the database automatically.
 
@@ -58,17 +58,7 @@ This method sets up both the application and the database automatically.
     cd App
     ```
 
-2.  **Start the services**
-    ```bash
-    docker-compose up -d --build
-    ```
-
-3.  **Verify Status**
-    The API will be available at `http://localhost:8000`.
-
-### Method 2: Manual Setup
-
-1.  **Create a Virtual Environment**
+2.  **Create a Virtual Environment**
     ```bash
     python -m venv .venv
     # Windows
@@ -77,24 +67,17 @@ This method sets up both the application and the database automatically.
     source .venv/bin/activate
     ```
 
-2.  **Install Dependencies**
+3.  **Install Dependencies**
     ```bash
     pip install -r requirements.txt
     ```
 
-3.  **Setup Database**
+4.  **Setup Database**
     -   Start your MySQL server.
     -   Run the SQL script to create the schema:
         ```bash
         mysql -u root -p < database.sql
         ```
-
-4.  **Configure Environment**
-    -   Copy the example environment file:
-        ```bash
-        cp .env.example .env
-        ```
-    -   Edit `.env` with your database credentials.
 
 5.  **Run the Application**
     ```bash
@@ -106,28 +89,9 @@ This method sets up both the application and the database automatically.
     -   Navigate to `index.html` file to access from browser.
 
 or
+
 2.  **Direct Open File**
     -   Doble click `index.html` file to open in browser.
-
-## ⚙ Configuration
-
-The application uses a `.env` file for configuration. Available variables:
-
-| Variable | Description | Default |
-| :--- | :--- | :--- |
-| `DB_HOST` | Database hostname | `localhost` |
-| `DB_USER` | Database username | `root` |
-| `DB_PASSWORD` | Database password | `""` |
-| `DB_NAME` | Database name | `chatbot_db` |
-
-## 🚀 Deployment
-
-### Production (Docker)
-For production environments, use Docker Compose with the `-d` flag to run in detached mode. Ensure you update the `docker-compose.yml` or `.env` with strong passwords.
-
-```bash
-docker-compose up -d
-```
 
 ### Production (Manual)
 Use a process manager like Gunicorn with Uvicorn workers:
