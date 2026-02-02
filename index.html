@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Chatbot</title>
+<style>
+#chat-toggle {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  padding: 10px 15px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#chatbox {
+  position: fixed;
+  right: 20px;
+  bottom: 80px;
+  width: 320px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: none;
+}
+
+#chat-header {
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#chat-body {
+  height: 250px;
+  overflow-y: auto;
+  padding: 10px;
+  font-family: Arial;
+}
+
+#chat-input {
+  display: flex;
+}
+
+#chat-input input {
+  flex: 1;
+  padding: 5px;
+}
+</style>
+</head>
+<body>
+
+<!-- Tombol bubble -->
+<button id="chat-toggle" onclick="toggleChat()">💬</button>
+
+<div id="chatbox">
+  <div id="chat-header" onclick="toggleChat()">Chatbot</div>
+  <div id="chat-body"></div>
+  <div id="chat-input">
+    <input type="text" id="msg" placeholder="Ketik pesan...">
+    <button onclick="sendMsg()">Send</button>
+  </div>
+</div>
+
+<script>
+function toggleChat() {
+  const chatbox = document.getElementById("chatbox");
+  if (chatbox.style.display === "none" || chatbox.style.display === "") {
+    chatbox.style.display = "block";
+  } else {
+    chatbox.style.display = "none";
+  }
+}
+
+async function sendMsg(){
+  let msg = document.getElementById("msg").value;
+  let body = document.getElementById("chat-body");
+
+  if (!msg) return;
+
+  body.innerHTML += `<div><b>You:</b> ${msg}</div>`;
+
+  let res = await fetch("http://localhost:8000/chat",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json"},
+    body: JSON.stringify({message:msg})
+  });
+
+  let data = await res.json();
+
+  let botReply = `<div><b>Bot:</b> ${data.reply}</div>`;
+
+  if (data.name || data.phone || data.address || data.datetime) {
+    botReply += `
+      <div style="margin-left:10px;">
+        <b>Nama:</b> ${data.name || "-"}<br>
+        <b>Telepon:</b> ${data.phone || "-"}<br>
+        <b>Alamat:</b> ${data.address || "-"}<br>
+        <b>Tanggal:</b> ${data.datetime || "-"}
+      </div>
+    `;
+  }
+
+  body.innerHTML += botReply;
+  document.getElementById("msg").value="";
+}
+</script>
+
+</body>
+</html>

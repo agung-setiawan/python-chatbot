@@ -100,6 +100,14 @@ This method sets up both the application and the database automatically.
     ```bash
     uvicorn main:app --reload
     ```
+## ⚙ How To Run from Browser
+
+1.  **Open Browser**
+    -   Navigate to `index.html` file to access from browser.
+
+or
+2.  **Direct Open File**
+    -   Doble click `index.html` file to open in browser.
 
 ## ⚙ Configuration
 
